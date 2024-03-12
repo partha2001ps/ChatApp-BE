@@ -38,7 +38,7 @@ const userController = {
                     email: email,
                     id:user._id
                 }, JWTPASS)
-                return res.json({Token,message:"User Login success",id:user_id})
+                return res.json({Token,message:"User Login success",user})
             }
             return res.json({message:"Invaild User"})
         } catch (error) {
