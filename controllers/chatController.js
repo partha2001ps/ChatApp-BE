@@ -48,6 +48,7 @@ const chatController = {
             });
 
             await newMessage.save();
+            io.to(receiverId).emit('message', newMessage);
 
             res.status(201).json(newMessage);
         } catch (error) {
