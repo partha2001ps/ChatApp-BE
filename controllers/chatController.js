@@ -1,3 +1,4 @@
+const io = require("..");
 const ChatModel = require("../models/chat");
 const User = require("../models/user");
 
@@ -34,28 +35,8 @@ const chatController = {
             res.status(500).json({ error: 'Internal server error' });
         }
     },
-    sendChat: async (req, res) => {
-        try {
-            const { senderId, receiverId, message } = req.body; 
-            if (!senderId || !receiverId || !message) {
-                return res.status(400).json({ error: 'Sender ID, Receiver ID, and Message are required' });
-            }
-
-            const newMessage = new ChatModel({
-                sender: senderId,
-                receiver: receiverId,
-                message: message
-            });
-
-            await newMessage.save();
-            io.to(receiverId).emit('message', newMessage);
-
-            res.status(201).json(newMessage);
-        } catch (error) {
-            console.error('Error sending message:', error);
-            res.status(500).json({ error: 'Internal server error' });
-        }
-    }
+  
+      
 };
 
 module.exports = chatController;
