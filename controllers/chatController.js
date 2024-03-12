@@ -4,14 +4,15 @@ const User = require("../models/user");
 const chatController = {
     allUser: async (req, res) => {
         try {
-            const currentUser = req.user;
-            const users = await User.find({ _id: { $ne: currentUser._id } }); 
-            res.status(200).json(users);
+          const currentUserId = req.params.id;
+          const users = await User.find({ _id: { $ne: currentUserId } });
+          res.status(200).json(users);
         } catch (error) {
-            console.error('Error fetching users:', error);
-            res.status(500).json({ error: 'Internal server error' });
+          console.error('Error fetching users:', error);
+          res.status(500).json({ error: 'Internal server error' });
         }
-    },
+      }
+    ,
     
     fetchChat: async (req, res) => {
         try {
