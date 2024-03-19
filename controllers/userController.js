@@ -6,7 +6,7 @@ const nodemailer=require('nodemailer')
 
 const userController = {
     signup: async (req, res) => {
-        const { name, email, password } = req.body;
+        const { name, email, password,pic } = req.body;
         try {
             const user = await User.findOne({ email })
             if (user) {
@@ -15,7 +15,7 @@ const userController = {
             else {
                 const passwordHash = await bcrypt.hash(password, 10)
                 const user = new User({
-                    name,email,passwordHash
+                    name,email,passwordHash,pic
                 })
                 await user.save()
                 return res.json({message:"user created"})
