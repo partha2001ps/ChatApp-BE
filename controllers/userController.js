@@ -47,6 +47,19 @@ const userController = {
             return res.json({message:"signIn error"})
         }
     },
+    user: async (req, res) => {
+        try {
+            const userId = req.params.id
+            const user = await User.findById(userId)
+            if (user) {
+                return res.json(user)
+            }
+            return res.json({message:'user not found'})
+        } catch (error) {
+            console.log(error)
+            return res.json({message:'error user not found'})
+        }
+    },
     editProfile: async (req, res) => {
       try {
         const userId = req.params.id
