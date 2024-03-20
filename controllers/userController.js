@@ -2,7 +2,7 @@ const User = require("../models/user");
 const bcrypt = require('bcrypt');
 const jwt=require('jsonwebtoken');
 const { JWTPASS } = require("../utilies/config");
-const nodemailer=require('nodemailer')
+const nodemailer=require('nodemailer');
 
 const userController = {
     signup: async (req, res) => {
@@ -46,6 +46,19 @@ const userController = {
             console.log('signIn error',error)
             return res.json({message:"signIn error"})
         }
+    },
+    editProfile: async (req, res) => {
+      try {
+        const userId = req.params.id
+        const { name, email, pic } = req.body;
+          const user = await User.findByIdAndUpdate(userId, { name, email, pic }, { new: true })
+          if (!user) {
+              return res.json({message:'edit user not found'})
+          }
+          return res.json({message:'edit Done'})
+      } catch (error) {
+        return res.json({message:"edit Profile error"})
+      }
     },
     resetPassword: async(req, res) =>{
         const { email } = req.body;
